@@ -1,4 +1,4 @@
-POST http://127.0.0.1:8000/api/parse-requirement
+POST http://101.43.56.187:8000/api/parse-requirement
 Content-Type: application/json
 
 {
