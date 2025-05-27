@@ -21,13 +21,13 @@ class ParsedRequirement(BaseModel):
     circle_codes: Optional[List[str]] = None
 
     # 预算范围
-    budget: Optional[List[int]] = None
+    budget: Optional[List[Optional[int]]] = [None, None]
 
     # 购房目的
     purpose: Optional[List[str]] = None
 
     # 家庭状况
-    family_status: Optional[List[str]] = None  # 家庭状况（如“单身”、“已婚有子女”）
+    family_status: Optional[List[str]] = None
 
     # 其他偏好（文本形式）
     preferences: Optional[List[str]] = None
