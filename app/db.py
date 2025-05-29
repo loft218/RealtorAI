@@ -6,7 +6,7 @@ DATABASE_URL = settings.DATABASE_URL
 
 
 class Database:
-    _pool: asyncpg.Pool | None = None
+    _pool: Optional[asyncpg.Pool] = None
 
     @classmethod
     async def init_pool(cls):
