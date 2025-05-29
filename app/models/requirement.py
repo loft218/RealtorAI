@@ -36,10 +36,10 @@ class ParsedRequirement(BaseModel):
         json_schema_extra = {
             "example": {
                 "region": "浦东张江",
-                "district_names": ["浦东", "闵行"],
-                "circle_names": ["张江", "古美"],
-                "district_codes": ["310115", "310112"],
-                "circle_codes": ["613000136", "611900068"],
+                "district_names": ["浦东"],
+                "circle_names": ["张江"],
+                "district_codes": ["310115"],
+                "circle_codes": ["613000136"],
                 "budget": [750, 850],
                 "purpose": ["自住优先"],
                 "family_status": ["已婚", "有子女"],

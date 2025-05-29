@@ -38,8 +38,7 @@ class LocationMapper:
                 name = row["name"].strip()
                 code = row["code"].strip()
                 district_code = row["district_code"].strip()
-                # 支持同名跨区时用 (district_code,name) 唯一映射
-                self.circle_map[(district_code, name)] = code
+                self.circle_map[name] = code
 
     def _build_processors(self):
         # 区名处理器，加入“区”“新区”后缀
@@ -48,7 +47,7 @@ class LocationMapper:
             self.district_proc.add_keyword(f"{name}区")
             self.district_proc.add_keyword(f"{name}新区")
         # 商圈处理器
-        for (_, name), _ in self.circle_map.items():
+        for name in self.circle_map.keys():
             self.circle_proc.add_keyword(name)
             # 如有“板块”或“片区”后缀可按需加入
             self.circle_proc.add_keyword(f"{name}板块")
@@ -57,8 +56,8 @@ class LocationMapper:
     def get_district_code(self, district_name: str) -> Optional[str]:
         return self.district_map.get(district_name.strip())
 
-    def get_circle_code(self, district_code: str, circle_name: str) -> Optional[str]:
-        return self.circle_map.get((district_code, circle_name.strip()))
+    def get_circle_code(self, circle_name: str) -> Optional[str]:
+        return self.circle_map.get((circle_name.strip()))
 
     def extract(self, text: str) -> Tuple[List[str], List[str]]:
         """

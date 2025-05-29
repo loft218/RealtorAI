@@ -9,7 +9,7 @@ class DeepSeekClient:
     def __init__(self):
         self.api_key = settings.DEEPSEEK_API_KEY
         self.api_url = settings.DEEPSEEK_API_URL
-        print("DEEPSEEK_API_URL:", self.api_url)
+
         self.headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",

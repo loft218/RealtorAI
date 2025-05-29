@@ -32,16 +32,11 @@ async def parse_text(text: str) -> dict:
     # 1. 提取地名
     district_names, circle_names = mapper.extract(text)
 
-    print(f"提取到的区名: {district_names}")
-    print(f"提取到的商圈名: {circle_names}")
-
     # 2. 构造 prompt 并调用 LLM
     prompt = PROMPT_TEMPLATE.replace("{text}", text.strip())
     parsed_llm = await deepseek_client.call(prompt)
     if not parsed_llm:
         return {}
-    
-    print(f"LLM 解析结果: {parsed_llm}")
 
     # 3. 地图反查代码
     district_codes: List[str] = [
@@ -50,12 +45,11 @@ async def parse_text(text: str) -> dict:
         if mapper.get_district_code(name)
     ]
 
-    circle_codes: List[str] = []
-    for cname in circle_names:
-        for dcode in district_codes:
-            ccode = mapper.get_circle_code(dcode, cname)
-            if ccode and ccode not in circle_codes:
-                circle_codes.append(ccode)
+    circle_codes: List[str] = [
+        mapper.get_circle_code(name)
+        for name in circle_names
+        if mapper.get_circle_code(name)
+    ]
 
     # 4. 预算修正
     budget_min = parsed_llm.get("budget_min")

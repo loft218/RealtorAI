@@ -47,7 +47,6 @@ async def recommend_communities(req: RecommendRequest):
     # 调用推荐服务
     recommender = RecommenderService()
     parsed = ParsedRequirement(**parsed)  # Convert dict to ParsedRequirement
-    print("Parsed Requirement:", parsed)
     top_communities = await recommender.recommend_communities(parsed, weights=weights)
 
     return {"top_communities": top_communities}

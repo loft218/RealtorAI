@@ -64,7 +64,5 @@ class RecommenderService:
             max_price,  # $12
         ]
 
-        print("Executing query with params:", params)
-
         rows = await self.db.fetch_all(query, params)
         return [dict(row) for row in rows]
