@@ -8,6 +8,7 @@ PROMPT_TEMPLATE = """
 - region: 目标区域（如“浦东”、“张江”）,返回字符串
 - budget_min: 预算下限（万元）,无法确定时返回 None
 - budget_max: 预算上限（万元),无法确定时返回 None
+- bedroom_count: 房型（卧室数量，整数），无法确定时返回 None
 - purpose: 购房目的（如“首套自住”、“投资升值”,"改善"），返回字符串数组
 - family_status: 家庭状况（如“单身”、“已婚有子女”、”带老人“），返回字符串数组
 - preferences: 偏好（如“靠近地铁”、“学区”），返回字符串数组
@@ -18,6 +19,7 @@ PROMPT_TEMPLATE = """
   "region": "浦东张江",
   "budget_min": 750,
   "budget_max": 850,
+  "bedroom_count": 3,
   "purpose": ["自住","改善"],
   "family_status": ["已婚","有子女","带老人"],
   "preferences": ["靠近地铁","靠小学"]
@@ -69,6 +71,7 @@ async def parse_text(text: str) -> dict:
         "circle_names": circle_names or None,
         "circle_codes": circle_codes or None,
         "budget": [budget_min, budget_max],
+        "bedroom_count": parsed_llm.get("bedroom_count"),
         "purpose": parsed_llm.get("purpose"),
         "family_status": parsed_llm.get("family_status"),
         "preferences": parsed_llm.get("preferences", []),

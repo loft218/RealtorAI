@@ -23,6 +23,9 @@ class ParsedRequirement(BaseModel):
     # 预算范围
     budget: Optional[List[Optional[int]]] = [None, None]
 
+    # 房型（卧室数量，整数）
+    bedroom_count: Optional[int] = None
+
     # 购房目的
     purpose: Optional[List[str]] = None
 
@@ -41,6 +44,7 @@ class ParsedRequirement(BaseModel):
                 "district_codes": ["310115"],
                 "circle_codes": ["613000136"],
                 "budget": [750, 850],
+                "bedroom_count": 3,
                 "purpose": ["自住优先"],
                 "family_status": ["已婚", "有子女"],
                 "preferences": ["靠近地铁", "靠小学"],
