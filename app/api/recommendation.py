@@ -13,6 +13,9 @@ router = APIRouter()
 class RecommendRequest(BaseModel):
     parsed_requirement: Dict[str, Any]  # 直接传入 NLP 已解析结果
     custom_weights: Optional[Dict[str, float]] = Field(default=None)
+    random_factor: Optional[float] = Field(
+        default=1.0, description="推荐结果的随机扰动因子，100分制建议0.1~1.0"
+    )
 
 
 # 推荐结果结构
@@ -43,10 +46,13 @@ async def recommend_communities(req: RecommendRequest):
         raise HTTPException(status_code=400, detail="缺少有效的结构化购房需求")
 
     weights = req.custom_weights
+    random_factor = req.random_factor if req.random_factor is not None else 1.0
 
     # 调用推荐服务
     recommender = RecommenderService()
     parsed = ParsedRequirement(**parsed)  # Convert dict to ParsedRequirement
-    top_communities = await recommender.recommend_communities(parsed, weights=weights)
+    top_communities = await recommender.recommend_communities(
+        parsed, weights=weights, random_factor=random_factor
+    )
 
     return {"top_communities": top_communities}

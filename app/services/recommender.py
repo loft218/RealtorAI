@@ -16,6 +16,7 @@ class RecommenderService:
         requirement: ParsedRequirement,
         weights: Optional[Dict[str, float]] = None,
         limit: int = 10,
+        random_factor: float = 1.0,  # 新增参数，默认1.0
     ) -> List[Dict]:
         if not requirement:
             raise ValueError("Requirement must be provided")
@@ -79,6 +80,7 @@ class RecommenderService:
                            v.park_score * CAST(${param_idx+5} AS NUMERIC) +
                            v.restaurant_score * CAST(${param_idx+6} AS NUMERIC)
                        , 2)
+                       + (RANDOM() * {random_factor})  -- 随机因子，最大扰动由参数控制
                    ) AS final_score
             FROM public.v_community_scores v
             JOIN public.mv_community_roomtype_avg_price p ON v.id = p.community_id
@@ -104,6 +106,7 @@ class RecommenderService:
                            v.park_score * CAST(${param_idx+5} AS NUMERIC) +
                            v.restaurant_score * CAST(${param_idx+6} AS NUMERIC)
                        , 2)
+                       + (RANDOM() * {random_factor})  -- 随机因子，最大扰动由参数控制
                    ) AS final_score
             FROM public.v_community_scores v
             JOIN public.v_community_price_range r ON v.id = r.community_id
