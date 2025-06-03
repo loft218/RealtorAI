@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.models.requirement import RawTextRequest, ParsedRequirement
-from app.services.nlp_parser import parse_text
+# from app.services.nlp_parser import parse_text
+from app.services.nlp_parser_local import parse_text
 
 router = APIRouter()
 

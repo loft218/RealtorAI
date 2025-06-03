@@ -7,3 +7,4 @@ flashtext
 asyncpg
 pytest-mock
 numpy
+jieba

@@ -2,7 +2,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Dict, Any
-from app.services.weight_inferencer import weight_inferencer
+from app.services.weight_infer_local import infer_weights_locally
 
 router = APIRouter()
 
@@ -17,7 +17,7 @@ class WeightInferResponse(BaseModel):
 
 @router.post("/infer-weights", response_model=WeightInferResponse)
 async def infer_weights(req: WeightInferRequest):
-    weights = await weight_inferencer.infer_weights(req.requirement)  # 直接传文本
+    weights = await infer_weights_locally(req.requirement)  # 直接传文本
     if not weights:
         raise HTTPException(status_code=500, detail="权重推理失败")
     return {"weights": weights}
