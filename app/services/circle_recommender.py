@@ -6,6 +6,8 @@ from app.utils.sql_utils import format_sql
 from app.models.requirement import ParsedRequirement
 from app.core.config import settings
 
+MAX_INT = 2147483647
+
 
 class CircleRecommenderService:
     def __init__(self):
@@ -27,8 +29,7 @@ class CircleRecommenderService:
         budget_range = requirement.budget or [None, None]
 
         min_price = (budget_range[0] or 0) * 10000
-        max_price = (budget_range[1] or 99999999) * 10000
-
+        max_price = budget_range[1] * 10000 if budget_range[1] else MAX_INT
         # 动态拼接 WHERE 条件
         where_clauses = []
         params = []
