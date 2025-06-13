@@ -4,6 +4,8 @@ from contextlib import asynccontextmanager
 from app.api.requirement import router as requirement_router
 from app.api.weight_infer import router as weight_infer_router
 from app.api.recommendation import router as recommendation_router
+from app.api.circle_score import router as circle_score_router
+from app.api.community_score import router as community_score_router
 from app.db import Database
 
 
@@ -20,6 +22,8 @@ app = FastAPI(title="RealtorAI API", lifespan=lifespan)
 app.include_router(requirement_router, prefix="/api")
 app.include_router(weight_infer_router, prefix="/api")
 app.include_router(recommendation_router, prefix="/api")
+app.include_router(circle_score_router, prefix="/api")
+app.include_router(community_score_router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn
