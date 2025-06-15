@@ -5,6 +5,7 @@ from app.config.keyword_config import WEIGHT_KEYWORDS
 
 DEFAULT_BASE_SCORE = 0.2  # 没匹配到关键词时的默认基础得分
 
+
 def stretch_weights(weights: Dict[str, float], alpha: float = 1.5) -> Dict[str, float]:
     """
     对权重进行拉伸处理，使主项更突出，次项更低调

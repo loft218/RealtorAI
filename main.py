@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
+from app.services.jieba_custom_dict import add_all_custom_words
 
 from app.api.requirement import router as requirement_router
 from app.api.weight_infer import router as weight_infer_router
@@ -11,6 +12,7 @@ from app.db import Database
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    add_all_custom_words()  # 应用启动时自动添加所有自定义分词
     await Database.init_pool()
     yield
     await Database.close_pool()
