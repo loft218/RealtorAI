@@ -20,7 +20,9 @@ def stretch_weights(weights: Dict[str, float], alpha: float = 1) -> Dict[str, fl
     return {k: round(float(v), 3) for k, v in zip(keys, normalized)}
 
 
-async def infer_weights_locally(requirement_text: str) -> Dict[str, float]:
+async def infer_weights_locally(
+    requirement_text: str, alpha: float = 1
+) -> Dict[str, float]:
     """
     根据用户需求文本，使用分词和关键词匹配进行评分项权重推理（本地）
     :param requirement_text: 用户购房需求文本
@@ -37,7 +39,7 @@ async def infer_weights_locally(requirement_text: str) -> Dict[str, float]:
     normalized_scores = {k: v / total_score for k, v in raw_scores.items()}
 
     # return normalized_scores
-    return stretch_weights(normalized_scores)
+    return stretch_weights(normalized_scores, alpha)
 
 
 # ✅ 示例调用
@@ -46,6 +48,6 @@ if __name__ == "__main__":
         "房龄新，交通方便，附近有地铁站，学校资源丰富，公园绿地多，居住舒适度高。"
     )
     print("用户需求：", user_requirement)
-    weights = infer_weights_locally(user_requirement)
+    weights = infer_weights_locally(user_requirement, alpha=1)
     print("推理得到的评分项权重：")
     print(weights)

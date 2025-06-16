@@ -9,6 +9,7 @@ router = APIRouter()
 
 class WeightInferRequest(BaseModel):
     requirement: str  # 修改为文本类型
+    alpha: float = 2.0
 
 
 class WeightInferResponse(BaseModel):
@@ -17,7 +18,9 @@ class WeightInferResponse(BaseModel):
 
 @router.post("/infer-weights", response_model=WeightInferResponse)
 async def infer_weights(req: WeightInferRequest):
-    weights = await infer_weights_locally(req.requirement)  # 直接传文本
+    weights = await infer_weights_locally(
+        req.requirement, alpha=req.alpha
+    )  # 直接传文本
     if not weights:
         raise HTTPException(status_code=500, detail="权重推理失败")
     return {"weights": weights}

@@ -53,7 +53,9 @@ def stretch_weights(weights: Dict[str, float], alpha: float = 2.0) -> Dict[str, 
 
 
 class WeightInferencer:
-    async def infer_weights(self, requirement_text: str) -> Dict[str, float]:
+    async def infer_weights(
+        self, requirement_text: str, alpha: float = 2.0
+    ) -> Dict[str, float]:
         prompt = WEIGHT_INFER_PROMPT.format(requirement=requirement_text)
         result = await deepseek_client.call(prompt)
 
@@ -61,7 +63,7 @@ class WeightInferencer:
         default_weights = settings.DEFAULT_WEIGHTS
 
         if not result or not isinstance(result, dict):
-            return stretch_weights(default_weights)
+            return stretch_weights(default_weights, alpha=alpha)
 
         # 提取有效权重
         parsed_weights = {
