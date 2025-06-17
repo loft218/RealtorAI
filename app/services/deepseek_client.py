@@ -16,12 +16,17 @@ class DeepSeekClient:
         }
 
     async def call(
-        self, prompt: str, model: str = "deepseek-chat", temperature: float = 0.2
+        self,
+        prompt: str,
+        model: str = "deepseek-chat",
+        temperature: float = 0.2,
+        web_search: bool = False,  # 新增参数控制是否联网
     ) -> Optional[dict]:
         payload = {
             "model": model,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": temperature,
+            "web_search": web_search,  # 关键参数，启用联网搜索
         }
 
         async with httpx.AsyncClient() as client:
