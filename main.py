@@ -11,6 +11,7 @@ from app.api.market_trend import router as market_trend_router
 from app.api.market_overview import router as market_overview_router
 from app.api.property_policy import router as property_policy_router
 from app.api.market_stats import router as market_stats_router
+from app.api.community_suggest import router as community_suggest_router
 
 from app.db import Database
 
@@ -35,6 +36,7 @@ app.include_router(market_trend_router, prefix="/api")
 app.include_router(market_overview_router, prefix="/api")
 app.include_router(property_policy_router, prefix="/api")
 app.include_router(market_stats_router, prefix="/api")
+app.include_router(community_suggest_router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn
